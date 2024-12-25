@@ -6,6 +6,7 @@ using namespace std;
 
 class Solution {
 public:
+    // Space O(n), Time Worst O(n^2), Time Average O(n)
     vector<int> twoSum(vector<int>& nums, int target) {
         unordered_map<int, int> numToIndex;
 

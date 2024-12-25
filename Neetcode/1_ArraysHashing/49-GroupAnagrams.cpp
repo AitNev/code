@@ -19,6 +19,7 @@ public:
         }
     };
 
+    // Space O(n), Time Worst O(n^2), Time Average O(n)
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
         unordered_map<array<int, 26>, vector<string>, ArrayHash> anagramMap;
 
