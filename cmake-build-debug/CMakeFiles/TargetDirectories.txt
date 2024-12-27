@@ -1,2 +1,0 @@
-C:/ME/workspaces/code/jetbrains/c/code/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/ME/workspaces/code/jetbrains/c/code/cmake-build-debug/CMakeFiles/rebuild_cache.dir
