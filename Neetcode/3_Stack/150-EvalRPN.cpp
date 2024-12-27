@@ -7,9 +7,10 @@ using namespace std;
 
 class Solution {
 public:
+    // Space O(n), Time O(n)
     int evalRPN(vector<string>& tokens) {
         stack<int> myStack;
-        for (string token:tokens){
+        for (string token:tokens){  // O(n) execution time
             if (token == "+" || token == "-" || token == "*" || token == "/"){
                 int a = myStack.top();
                 myStack.pop();
