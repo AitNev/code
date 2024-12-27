@@ -1,2 +1,5 @@
 .idea/
 cmake-build-debug/
+
+# Ignore .exe files
+*.exe
