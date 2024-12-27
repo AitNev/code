@@ -6,14 +6,14 @@ using namespace std;
 
 class Solution {
 public:
-
+    // Space O(n) Time O(n)
     vector<int> dailyTemperatures(vector<int>& temperatures) {
         vector<int> answer(temperatures.size(), 0); // Initialize the vector
         stack<pair<int, int>> myStack; // Temperature, Index
 
         for (int i = temperatures.size()-1; i >= 0; i--) {
             int temperature = temperatures[i];
-            while (!myStack.empty()){
+            while (!myStack.empty()){   // Read only once per item the stack
                 if (myStack.top().first > temperature) {
                     answer[i] = myStack.top().second - i;
                     break;
