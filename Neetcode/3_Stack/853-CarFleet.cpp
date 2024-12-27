@@ -8,6 +8,7 @@ using namespace std;
 
 class Solution {
 public:
+    // Space O(n), Time O(nlogn + nc) c: Simulation cycles
     int carFleet(int target, vector<int>& position, vector<int>& speed) {
         // Sort the input O(nlogn)
         vector<pair<int,int>> vehicles;
