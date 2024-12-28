@@ -5,51 +5,76 @@
 using namespace std;
 
 struct Solution {
-
-    // Space O(n), Time O(n)
+    // Space O(1), Time O(n) Using two pointers
     int trap(vector<int>& heights) {
-        int accumulator = 0;
-        stack<pair<int, int>> s;
-        bool leftWall = false;
-        for (int i = 0; i < heights.size(); ++i) {
-            // On the start put an element
-            int h = heights[i];
-            if (s.empty()) s.push({h, i});
-            else {
-                if(h < s.top().first){  // Encounter a dip
-                    if (!leftWall){
-                        leftWall = true;
-                    }
-                    s.push({h, i}); // Store when dip lower
-                }else if(h > s.top().first){ // Can fill with water
-                    if (!leftWall){ // Edge case with no left wall to fill
-                        s.pop();    // Replace the stack item with max one
-                        s.push({h,i});
-                    } else{
-                        // Last stack element only counts as the max wall
-                        int bottom = s.top().first;
-                        while (s.size() > 1 && h > s.top().first){  // Count how much water we can fill
-                            // Discard Duplicates
-                            while (s.size() > 1 && s.top().first == bottom) s.pop();
+        int accumulator = 0, b = 0, e = heights.size()-1;
+        int ml = heights[b], mr = heights[e];
 
-                            // Add rectangle with width of i and height min of h or next elem
-                            int top = min(h, s.top().first);    // Don't overfill
-                            accumulator += (top - bottom) * (i - (s.top().second+1));
-//                            printf("At %i added %i \n", i, (top - bottom) * (i - (s.top().second+1)));
-                            bottom = top;
-                        }
-                        // Pop the old maximum
-                        if(h > s.top().first || (h == s.top().first && s.size() == 1)) s.pop();
-                        s.push({h,i}); // Store this
-                    }
-                } else{ // Replace duplicated maximums
-                    if (s.size() == 1) s.pop();
-                    s.push({h,i}); // Update with new wall
-                }
+        // Leverage we need the min to move the pointers
+        while(b+1 < e){ // Thus we can move the eq and lesser pointers
+            if (ml < mr){ // Advance the left pointer since it's the lowest
+                b++;
+                int h = heights[b];
+                accumulator += calculateWater(h, ml, mr);
+                if (h > ml) ml = h;
+            }else{  // Advance the right pointer since it's the lowest or equal
+                e--;
+                int h = heights[e];
+                accumulator += calculateWater(h, ml, mr);
+                if (h > mr) mr = h;
             }
         }
         return accumulator;
     }
+    // Calculates the water we can fill for a given position
+    static int calculateWater(int height, int maxLeft, int maxRight){
+        int water = min(maxLeft, maxRight);
+        return (water > height)? water - height:0;
+    }
+//    // Space O(n), Time O(n) Using Stack way
+//    int trap(vector<int>& heights) {
+//        int accumulator = 0;
+//        stack<pair<int, int>> s;
+//        bool leftWall = false;
+//        for (int i = 0; i < heights.size(); ++i) {
+//            // On the start put an element
+//            int h = heights[i];
+//            if (s.empty()) s.push({h, i});
+//            else {
+//                if(h < s.top().first){  // Encounter a dip
+//                    if (!leftWall){
+//                        leftWall = true;
+//                    }
+//                    s.push({h, i}); // Store when dip lower
+//                }else if(h > s.top().first){ // Can fill with water
+//                    if (!leftWall){ // Edge case with no left wall to fill
+//                        s.pop();    // Replace the stack item with max one
+//                        s.push({h,i});
+//                    } else{
+//                        // Last stack element only counts as the max wall
+//                        int bottom = s.top().first;
+//                        while (s.size() > 1 && h > s.top().first){  // Count how much water we can fill
+//                            // Discard Duplicates
+//                            while (s.size() > 1 && s.top().first == bottom) s.pop();
+//
+//                            // Add rectangle with width of i and height min of h or next elem
+//                            int top = min(h, s.top().first);    // Don't overfill
+//                            accumulator += (top - bottom) * (i - (s.top().second+1));
+////                            printf("At %i added %i \n", i, (top - bottom) * (i - (s.top().second+1)));
+//                            bottom = top;
+//                        }
+//                        // Pop the old maximum
+//                        if(h > s.top().first || (h == s.top().first && s.size() == 1)) s.pop();
+//                        s.push({h,i}); // Store this
+//                    }
+//                } else{ // Replace duplicated maximums
+//                    if (s.size() == 1) s.pop();
+//                    s.push({h,i}); // Update with new wall
+//                }
+//            }
+//        }
+//        return accumulator;
+//    }
 };
 
 int main() {
@@ -76,7 +101,7 @@ int main() {
     cout << "Test case 4: " << result4 << endl;
 
     // Test case 5
-    vector<int> height5 = {1, 1, 1, 1, 1};
+    vector<int> height5 = {0,1,0,2,1,0,1,3,2,1,2,1};
     int result5 = solution.trap(height5);
     cout << "Test case 5: " << result5 << endl;
 
