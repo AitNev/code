@@ -5,6 +5,7 @@ using namespace std;
 
 class Solution {
 public:
+    // Space O(1), Time O(n)
     int maxArea(vector<int>& height) {
         if (height.size() == 1) return height[0];
 
