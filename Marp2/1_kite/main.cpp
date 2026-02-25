@@ -33,7 +33,7 @@
  *  Costes:
  *  - Tiempo O(n * l) => O(n2) ambos maximos son iguales
  *    - Son 2 bucles
- *  - Espacion O(l)
+ *  - Espacio O(l)
  *    - Solo usamos vectores de tamanyo l
  *
  */
@@ -111,7 +111,7 @@ bool resuelveCaso() {
 
 int main() {
 #ifndef DOMJUDGE
-    std::ifstream in("Marp2/1_kite/cases.txt");
+    std::ifstream in("cases.txt");
     if (!in) {
         std::cerr << "Could not open cases.txt\n";
         return 0;
